@@ -13,6 +13,17 @@ http://localhost:8080/documentation
 ## Requisitos
 - Java 17
 - Maven
+
+## Comandos
+
+- Compilar: mvn clean install
+- Test: mvn test
+
+## Requisitos opcionales
+
+- Pruebas unitarias
+- Swagger
+
  
 ## Configuración
 
@@ -31,14 +42,4 @@ spring.h2.console.path=/h2-console
 springdoc.swagger-ui.path=/documentation
 
 regex.password=^(?=.*[a-zA-Z])(?=.*[0-9]).+$
-
-## Comandos
-
-- Compilar: mvn clean install
-- Test: mvn test
-
-## Requisitos opcionales
-
-- Pruebas unitarias
-- Swagger
 
