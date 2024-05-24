@@ -1,6 +1,6 @@
 package com.example.userapi.dto;
 
-public class PhoneDTO {
+public class PhoneDto {
 
 	private String number;
 	private String citycode;

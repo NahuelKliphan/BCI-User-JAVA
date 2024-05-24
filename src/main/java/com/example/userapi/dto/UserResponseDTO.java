@@ -2,11 +2,10 @@ package com.example.userapi.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
-public class UserResponseDTO {
+public class UserResponseDto {
 
-	private UUID id;
+	private Integer id;
 	private String name;
 	private String email;
 	private LocalDateTime created;
@@ -14,13 +13,13 @@ public class UserResponseDTO {
 	private LocalDateTime lastLogin;
 	private String token;
 	private boolean isActive;
-	private List<PhoneDTO> phones;
+	private List<PhoneDto> phones;
 
-	public UUID getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -80,11 +79,11 @@ public class UserResponseDTO {
 		this.isActive = isActive;
 	}
 
-	public List<PhoneDTO> getPhones() {
+	public List<PhoneDto> getPhones() {
 		return phones;
 	}
 
-	public void setPhones(List<PhoneDTO> phones) {
+	public void setPhones(List<PhoneDto> phones) {
 		this.phones = phones;
 	}
 

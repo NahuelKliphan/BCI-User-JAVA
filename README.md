@@ -4,11 +4,39 @@ Esta aplicación expone una API RESTful para crear y listar usuarios.
 
 Banco de datos en memoria H2 (No requiere scripts)
 
-Ver documentación de swagger para probar
+Tres enpoints:
+
+- Register:
+
+POST: http://localhost:8080/user/register (sin segurizar)
+
+Body de prueba:
+
+{
+  "name": "Juan Rodriguez",
+  "email": "juan@rodriguez.org",
+  "password": "123asd",
+  "phones": [
+    {
+      "number": "1234567",
+      "contrycode": "57"
+    }
+  ]
+}
+
+Con el token obtenido probar los demas endpoints poniendo en el header Authorization Bearer + token
+
+GET: http://localhost:8080/user/login (Header Authorization + token)
+
+Devuelve los datos del usuario logueado
+
+GET: http://localhost:8080/user (Header Authorization + token)
+
+Devuelve lista basica de usuario registrados
 
 ## Swagger
 
-http://localhost:8080/documentation
+http://localhost:8080/swagger-ui/index.htm
 
 ## Requisitos
 - Java 17

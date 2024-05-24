@@ -5,7 +5,7 @@ import java.util.List;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
-public class UserRequestDTO {
+public class UserRequestDto {
 
 	@NotEmpty(message = "El campo 'name' es obligatorio")
 	private String name;
@@ -18,7 +18,7 @@ public class UserRequestDTO {
 	private String password;
 
 	@NotEmpty(message = "El campo 'phones' es obligatorio")
-	private List<PhoneDTO> phones;
+	private List<PhoneDto> phones;
 
 	public String getName() {
 		return name;
@@ -44,11 +44,11 @@ public class UserRequestDTO {
 		this.password = password;
 	}
 
-	public List<PhoneDTO> getPhones() {
+	public List<PhoneDto> getPhones() {
 		return phones;
 	}
 
-	public void setPhones(List<PhoneDTO> phones) {
+	public void setPhones(List<PhoneDto> phones) {
 		this.phones = phones;
 	}
 

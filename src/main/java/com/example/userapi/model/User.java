@@ -1,8 +1,11 @@
 package com.example.userapi.model;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -13,12 +16,21 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users") 
-public class User {
+@Table(name = "users")
+public class User implements UserDetails {
+
+	private static final long serialVersionUID = 8941598199921218051L;
+
+	public User() {
+		this.created = LocalDateTime.now();
+		this.modified = LocalDateTime.now();
+		this.lastLogin = LocalDateTime.now();
+		this.isActive = true;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
+	private Integer id;
 	private String name;
 	private String email;
 	private String password;
@@ -31,11 +43,41 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Phone> phones;
 
-	public UUID getId() {
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of();
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
+
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
