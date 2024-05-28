@@ -2,12 +2,14 @@ package com.example.userapi.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -18,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.example.userapi.dto.UserRequestDto;
 import com.example.userapi.dto.UserResponseDto;
 import com.example.userapi.dto.UserSimpleDto;
+import com.example.userapi.exception.EmailAlreadyRegisteredException;
 import com.example.userapi.model.User;
 import com.example.userapi.repository.UserRepository;
 import com.example.userapi.validator.UserValidator;
@@ -79,9 +82,14 @@ public class UserServiceImplTest {
 		User user = new User();
 		user.setEmail(email);
 
+		UserResponseDto userResponseDto = new UserResponseDto();
+		userResponseDto.setEmail(email);
+		userResponseDto.setToken(token);
+
 		when(jwtService.extractUsername(token)).thenReturn(email);
 		when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
-		when(modelMapper.map(user, UserResponseDto.class)).thenReturn(new UserResponseDto());
+		when(userRepository.save(user)).thenReturn(user);
+		when(modelMapper.map(user, UserResponseDto.class)).thenReturn(userResponseDto);
 
 		UserResponseDto response = userService.login(token);
 
@@ -92,18 +100,22 @@ public class UserServiceImplTest {
 
 	@Test
 	public void testGetAllUsers() {
+		String email = "test@example.com";
 		User user = new User();
 		user.setName("Test User");
-		user.setEmail("test@example.com");
+		user.setEmail(email);
+
+		UserSimpleDto userSimple = new UserSimpleDto();
+		userSimple.setEmail(email);
 
 		when(userRepository.findAll()).thenReturn(Collections.singletonList(user));
-		when(modelMapper.map(user, UserSimpleDto.class)).thenReturn(new UserSimpleDto());
+		when(modelMapper.map(user, UserSimpleDto.class)).thenReturn(userSimple);
 
 		List<UserSimpleDto> users = userService.getAllUsers();
 
 		assertNotNull(users);
 		assertEquals(1, users.size());
-		assertEquals("test@example.com", users.get(0).getEmail());
+		assertEquals(email, users.get(0).getEmail());
 	}
 
 }
